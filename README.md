@@ -2,7 +2,7 @@
 
 [![pub package](https://img.shields.io/pub/v/elevenlabs.svg)](https://pub.dartlang.org/packages/elevenlabs)
 
-A simple wrapper for ElevenLabs's [Text-To-Spech API](https://beta.elevenlabs.io).
+A simple wrapper for ElevenLabs's [Text-To-Speech API](https://beta.elevenlabs.io).
 
 ## Usage
 
