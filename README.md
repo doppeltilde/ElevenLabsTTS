@@ -6,9 +6,10 @@ A simple wrapper for ElevenLabs's [Text-To-Speech API](https://beta.elevenlabs.i
 
 ## Usage
 
-- Add the package as a dependency to your `pubspec.yaml` file.
+1. Add the package as a dependency to your `pubspec.yaml` file.
+2. A audio package is required. I recommend [AudioPlayers](https://pub.dev/packages/audioplayers) or [just_audio](https://pub.dev/packages/just_audio).
 
-- Initialize ElevenLabsTTS:
+3. Initialize ElevenLabsTTS:
 
 ```dart
 ElevenLabsTTS elevenlabs = ElevenLabsTTS(apiKey: 'API_KEY');
@@ -16,10 +17,10 @@ ElevenLabsTTS elevenlabs = ElevenLabsTTS(apiKey: 'API_KEY');
 
 VoiceId's can be found here: https://api.elevenlabs.io/v1/voices
 
-- Convert your text to a File object (**api key required**):
+4. Convert your text to a File object (**api key required**):
 
 ```dart
-    elevenlabs.textToSpeech(
+    elevenlabs.create(
       // Your Input
       text: text,
 
@@ -41,3 +42,4 @@ VoiceId's can be found here: https://api.elevenlabs.io/v1/voices
       similarityBoost: 1.0,
     );
 ```
+See [example](https://github.com/jonafeucht/ElevenLabsTTS/blob/main/example/lib/main.dart) for more details.

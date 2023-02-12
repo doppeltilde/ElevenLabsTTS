@@ -13,6 +13,7 @@ dependencies:
     path: ../
   cupertino_icons: ^1.0.2
   flutter_dotenv: ^5.0.2
+  audioplayers: ^3.0.1
 
 dev_dependencies:
   integration_test:

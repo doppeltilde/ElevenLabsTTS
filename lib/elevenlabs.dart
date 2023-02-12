@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 
@@ -9,7 +8,6 @@ const historyUrl = "$baseUrl/history";
 var client = http.Client();
 
 class ElevenLabsTTS {
-  AudioPlayer audioPlayer = AudioPlayer();
   String apiKey;
 
   ElevenLabsTTS({required this.apiKey});
@@ -18,7 +16,7 @@ class ElevenLabsTTS {
     return Uri.parse('$baseUrl$endpoint');
   }
 
-  Future textToSpeech({
+  Future<File> create({
     /// Input Text.
     required String text,
 
@@ -36,9 +34,6 @@ class ElevenLabsTTS {
 
     /// Ranges from 0.0 to 1.0.
     double similarityBoost = 0.0,
-
-    /// Speech Volume
-    double volume = 1.0,
   }) async {
     // Converts text to speech
     var endpoint = 'text-to-speech/$voiceId';
@@ -61,7 +56,7 @@ class ElevenLabsTTS {
           File('${dir.path}/${fileName?.replaceAll(RegExp(r"\s+"), "")}.mp3');
 
       if (await file.exists()) {
-        await audioPlayer.play(DeviceFileSource(file.path), volume: volume);
+        return file;
       } else {
         var response = await http.post(
           _getApiUrl(endpoint),
@@ -78,7 +73,7 @@ class ElevenLabsTTS {
         final bytes = response.bodyBytes;
         await file.writeAsBytes(bytes);
 
-        await audioPlayer.play(DeviceFileSource(file.path), volume: volume);
+        return file;
       }
     } catch (e) {
       throw (e);

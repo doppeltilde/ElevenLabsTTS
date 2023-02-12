@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:audioplayers/audioplayers.dart';
 import 'package:elevenlabs/elevenlabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -34,20 +37,21 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> {
+  AudioPlayer audioPlayer = AudioPlayer();
   final ElevenLabsTTS elevenlabs = ElevenLabsTTS(apiKey: dotenv.get("API_KEY"));
 
   String text =
       "Once men turned their thinking over to machines in the hope that this would set them free. But that only permitted other men with machines to enslave them.";
 
   _playDemo() async {
-    elevenlabs.textToSpeech(
+    File file = await elevenlabs.create(
       text: text,
       voiceId: "ErXwobaYiN019PkySvjV",
       fileName: "Hello World",
       stability: 0.2,
       similarityBoost: 0.2,
-      volume: 1.0,
     );
+    await audioPlayer.play(DeviceFileSource(file.path), volume: 1.0);
   }
 
   @override
