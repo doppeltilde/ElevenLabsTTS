@@ -1,0 +1,37 @@
+name: elevenlabs
+description: A simple wrapper for accessing ElevenLabs's Text-To-Spech API and converting the results to MP3 files.
+version: 1.0.0
+homepage:
+
+environment:
+  sdk: '>=2.17.0 <4.0.0'
+  flutter: ">=3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  plugin_platform_interface: ^2.0.2
+  http: ">=0.13.5 <1.0.0"
+  path_provider: ">=2.0.12 <3.0.0"
+  audioplayers: ">=3.0.1 <4.0.0"
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+
+  plugin:
+    platforms:
+      android:
+        package: keew.ee.elevenlabs
+        pluginClass: ElevenlabsPlugin
+      ios:
+        pluginClass: ElevenlabsPlugin
+      linux:
+        pluginClass: ElevenlabsPlugin
+      macos:
+        pluginClass: ElevenlabsPlugin
+      windows:
+        pluginClass: ElevenlabsPluginCApi
