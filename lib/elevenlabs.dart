@@ -96,8 +96,7 @@ class ElevenLabsTTS {
           }
         });
       }
-      String getHistoryById =
-          'https://api.elevenlabs.io/v1/history/$historyId/audio';
+      String getHistoryById = '$historyUrl/$historyId/audio';
 
       final dir = await getTemporaryDirectory();
 
