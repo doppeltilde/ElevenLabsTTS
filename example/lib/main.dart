@@ -1,4 +1,3 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:elevenlabs/elevenlabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -36,7 +35,7 @@ class MyHomePage extends StatefulWidget {
 
 class MyHomePageState extends State<MyHomePage> {
   final ElevenLabsTTS elevenlabs = ElevenLabsTTS(apiKey: dotenv.get("API_KEY"));
-  final audioPlayer = AudioPlayer();
+
   String text =
       "Once men turned their thinking over to machines in the hope that this would set them free. But that only permitted other men with machines to enslave them.";
 

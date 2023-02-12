@@ -1,7 +1,7 @@
 name: elevenlabs
 description: A simple wrapper for accessing ElevenLabs's Text-To-Spech API and converting the results to MP3 files.
 version: 1.0.0
-homepage:
+homepage: https://github.com/jonafeucht/ElevenLabsTTS
 
 environment:
   sdk: '>=2.17.0 <4.0.0'
