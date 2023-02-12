@@ -41,12 +41,17 @@ class ElevenLabsTTS {
   }
 
   Future textToSpeech({
+    /// Input Text.
     required String text,
 
-    /// Voice name.
-    ///
+    /// Voice Id.
     /// See https://api.elevenlabs.io/v1/voices for more info.
     String voiceId = 'MF3mGyEYCl7XYWbV9V6O',
+
+    /// File name.
+    /// Checks if the file exists by name
+    /// and then calls it from cache, instead from the API.
+    String? fileName,
 
     /// Ranges from 0.0 to 1.0.
     double stability = 0.0,
@@ -72,53 +77,32 @@ class ElevenLabsTTS {
       "similarity_boost": similarityBoost,
     };
 
-    var response = await http.post(
-      _getApiUrl(endpoint),
-      headers: headers,
-      body: json.encode(jsonData),
-    );
-
     try {
-      String historyId = "";
-      var responseHistory =
-          await http.get(Uri.parse(historyUrl), headers: headers);
-      Map<String, dynamic> data =
-          json.decode(utf8.decode(responseHistory.bodyBytes));
-
-      List<dynamic> dataAll = data['history'];
-
-      for (var element in dataAll) {
-        Map<String, dynamic> every = element;
-        every.forEach((key, value) {
-          if (key == 'text' &&
-              value.toString().toUpperCase() == text.toUpperCase()) {
-            historyId = every['history_item_id'];
-          }
-        });
-      }
-      String getHistoryById = '$historyUrl/$historyId/audio';
-
       final dir = await getTemporaryDirectory();
+      final file =
+          File('${dir.path}/${fileName?.replaceAll(RegExp(r"\s+"), "")}.mp3');
 
-      String id = DateTime.now().millisecondsSinceEpoch.toString();
-      final file = File('${dir.path}/$id.mp3');
+      if (await file.exists()) {
+        await audioPlayer.play(DeviceFileSource(file.path), volume: volume);
+      } else {
+        var response = await http.post(
+          _getApiUrl(endpoint),
+          headers: headers,
+          body: json.encode(jsonData),
+        );
 
-      if (historyId.isEmpty) {
+        final dir = await getTemporaryDirectory();
+        String id = DateTime.now().millisecondsSinceEpoch.toString();
+
+        final file = fileName?.replaceAll(RegExp(r"\s+"), "") != null
+            ? File(
+                '${dir.path}/${fileName?.replaceAll(RegExp(r"\s+"), "")}.mp3')
+            : File('${dir.path}/$id.mp3');
+
         final bytes = response.bodyBytes;
         await file.writeAsBytes(bytes);
 
         await audioPlayer.play(DeviceFileSource(file.path), volume: volume);
-      } else {
-        var getAudioFromHistory =
-            await client.get(Uri.parse(getHistoryById), headers: headers);
-        final bytes = getAudioFromHistory.bodyBytes;
-        await file.writeAsBytes(bytes);
-
-        if (getAudioFromHistory.statusCode == 200) {
-          await audioPlayer.play(DeviceFileSource(file.path), volume: volume);
-        } else {
-          print("Error: ${getAudioFromHistory.statusCode}");
-        }
       }
     } catch (e) {
       throw (e);
