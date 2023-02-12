@@ -27,9 +27,24 @@ VoiceId's can be found here: https://api.elevenlabs.io/v1/voices
 
 ```dart
     elevenlabs.textToSpeech(
+      // Your Input
       text: text,
+
+      // The Voice Id for the Voice.
+      // See: https://api.elevenlabs.io/v1/voices
       voiceId: "ErXwobaYiN019PkySvjV",
-      stability: 0.01,
-      similarityBoost: 0.6,
+
+      // Checks if the file exists by name
+      // If it exists it gets called from cache, instead from the API.
+      fileName: "Hello World",
+
+      // Higher stability ensures consistency but may result in monotony, therefore
+      // for longer text, it is recommended to decrease stability.
+      stability: 1.0,
+
+      // Boosting voice clarity and target speaker similarity is achieved by high
+      // enhancement; however, very high values can produce artifacts, so it's
+      // essential to find the optimal setting.
+      similarityBoost: 1.0,
     );
 ```
