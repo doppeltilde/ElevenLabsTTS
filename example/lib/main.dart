@@ -43,8 +43,9 @@ class MyHomePageState extends State<MyHomePage> {
     elevenlabs.textToSpeech(
       text: text,
       voiceId: "ErXwobaYiN019PkySvjV",
-      stability: 0.01,
-      similarityBoost: 0.6,
+      stability: 0.2,
+      similarityBoost: 0.2,
+      volume: 1.0,
     );
   }
 

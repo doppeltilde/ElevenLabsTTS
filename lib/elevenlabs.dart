@@ -5,6 +5,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 
 const baseUrl = "https://api.elevenlabs.io/v1/";
+const historyUrl = "https://api.elevenlabs.io/v1/history";
 var client = http.Client();
 
 class FileService {
@@ -23,7 +24,6 @@ class FileService {
 
 class AudioResponse {
   final String? audioContent;
-
   AudioResponse(this.audioContent);
 
   AudioResponse.fromJson(Map<String, dynamic> json)
@@ -53,6 +53,9 @@ class ElevenLabsTTS {
 
     /// Ranges from 0.0 to 1.0.
     double similarityBoost = 0.0,
+
+    /// Speech Volume
+    double volume = 1.0,
   }) async {
     // Converts text to speech
     var endpoint = 'text-to-speech/$voiceId';
@@ -76,12 +79,48 @@ class ElevenLabsTTS {
     );
 
     try {
-      final dir = await getTemporaryDirectory();
-      final file = File('${dir.path}/audio.mp3');
-      final bytes = response.bodyBytes;
-      await file.writeAsBytes(bytes);
+      String historyId = "";
+      var responseHistory =
+          await http.get(Uri.parse(historyUrl), headers: headers);
+      Map<String, dynamic> data =
+          json.decode(utf8.decode(responseHistory.bodyBytes));
 
-      await audioPlayer.play(DeviceFileSource(file.path));
+      List<dynamic> dataAll = data['history'];
+
+      for (var element in dataAll) {
+        Map<String, dynamic> every = element;
+        every.forEach((key, value) {
+          if (key == 'text' &&
+              value.toString().toUpperCase() == text.toUpperCase()) {
+            historyId = every['history_item_id'];
+          }
+        });
+      }
+      String getHistoryById =
+          'https://api.elevenlabs.io/v1/history/$historyId/audio';
+
+      final dir = await getTemporaryDirectory();
+
+      String id = DateTime.now().millisecondsSinceEpoch.toString();
+      final file = File('${dir.path}/$id.mp3');
+
+      if (historyId.isEmpty) {
+        final bytes = response.bodyBytes;
+        await file.writeAsBytes(bytes);
+
+        await audioPlayer.play(DeviceFileSource(file.path), volume: volume);
+      } else {
+        var getAudioFromHistory =
+            await client.get(Uri.parse(getHistoryById), headers: headers);
+        final bytes = getAudioFromHistory.bodyBytes;
+        await file.writeAsBytes(bytes);
+
+        if (getAudioFromHistory.statusCode == 200) {
+          await audioPlayer.play(DeviceFileSource(file.path), volume: volume);
+        } else {
+          print("Error: ${getAudioFromHistory.statusCode}");
+        }
+      }
     } catch (e) {
       throw (e);
     }
