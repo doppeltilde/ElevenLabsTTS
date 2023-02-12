@@ -12,7 +12,7 @@ A simple wrapper for ElevenLabs's [Text-To-Speech API](https://beta.elevenlabs.i
 dependencies:
   flutter:
     sdk: flutter
-  elevenlabs: ^1.0.0
+  elevenlabs: ^1.0.3
 ```
 
 - Initialize ElevenLabsTTS:
