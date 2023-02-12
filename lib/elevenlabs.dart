@@ -5,7 +5,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 
 const baseUrl = "https://api.elevenlabs.io/v1/";
-const historyUrl = "https://api.elevenlabs.io/v1/history";
+const historyUrl = "$baseUrl/history";
 var client = http.Client();
 
 class FileService {
