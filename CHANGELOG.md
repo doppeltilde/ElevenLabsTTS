@@ -1,3 +1,5 @@
+## 1.0.4
+* Clean up.
 ## 1.0.3
 * Added `fileName`.
 ## 1.0.2

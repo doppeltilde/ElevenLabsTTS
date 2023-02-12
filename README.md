@@ -6,14 +6,7 @@ A simple wrapper for ElevenLabs's [Text-To-Speech API](https://beta.elevenlabs.i
 
 ## Usage
 
-- add the package as a dependency to your `pubspec.yaml` file:
-
-```yaml
-dependencies:
-  flutter:
-    sdk: flutter
-  elevenlabs: ^1.0.3
-```
+- Add the package as a dependency to your `pubspec.yaml` file.
 
 - Initialize ElevenLabsTTS:
 

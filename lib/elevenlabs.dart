@@ -8,28 +8,6 @@ const baseUrl = "https://api.elevenlabs.io/v1/";
 const historyUrl = "$baseUrl/history";
 var client = http.Client();
 
-class FileService {
-  static Future<String> get _localPath async {
-    final directory = await getTemporaryDirectory();
-    return directory.path;
-  }
-
-  static Future<File> createAndWriteFile(String filePath, content) async {
-    final path = await _localPath;
-    final file = File('$path/$filePath');
-    await file.writeAsBytes(content);
-    return file;
-  }
-}
-
-class AudioResponse {
-  final String? audioContent;
-  AudioResponse(this.audioContent);
-
-  AudioResponse.fromJson(Map<String, dynamic> json)
-      : audioContent = json['audioContent'];
-}
-
 class ElevenLabsTTS {
   AudioPlayer audioPlayer = AudioPlayer();
   String apiKey;
@@ -90,8 +68,6 @@ class ElevenLabsTTS {
           headers: headers,
           body: json.encode(jsonData),
         );
-
-        final dir = await getTemporaryDirectory();
         String id = DateTime.now().millisecondsSinceEpoch.toString();
 
         final file = fileName?.replaceAll(RegExp(r"\s+"), "") != null
