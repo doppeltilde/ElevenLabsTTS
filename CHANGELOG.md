@@ -1,3 +1,5 @@
+## 1.0.8
+* Refactor and fixes.
 ## 1.0.7
 * Refactor.
 ## 1.0.4

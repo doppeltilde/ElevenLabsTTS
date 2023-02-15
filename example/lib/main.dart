@@ -8,7 +8,67 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load();
+
+  // Initialize ElevenLabs
+  ElevenLabs(apiKey: dotenv.get("API_KEY"));
+
   runApp(const MyApp());
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key, this.title}) : super(key: key);
+
+  final String? title;
+
+  @override
+  MyHomePageState createState() => MyHomePageState();
+}
+
+class MyHomePageState extends State<MyHomePage> {
+  AudioPlayer audioPlayer = AudioPlayer();
+
+  String text =
+      "Once men turned their thinking over to machines in the hope that this would set them free. But that only permitted other men with machines to enslave them.";
+
+  _playDemo() async {
+    File file = await ElevenLabs.instance.create(
+      text: text,
+      voiceId: "ErXwobaYiN019PkySvjV",
+      fileName: "Hello World",
+      stability: 0.4,
+      similarityBoost: 0.6,
+    );
+    print(file.path);
+    await audioPlayer.play(DeviceFileSource(file.path), volume: 1.0);
+  }
+
+  listVoices() async {
+    final voices = await ElevenLabs.instance.fetchVoices();
+    for (var i in voices) {
+      print(
+          'Voice Name: ${i.name}, Voice ID: ${i.voiceId}, Category: ${i.category}');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            ElevatedButton(
+                onPressed: () => _playDemo(), child: const Text("Play Demo")),
+            ElevatedButton(
+                onPressed: () => listVoices(),
+                child: const Text("Fetch Voices")),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -23,61 +83,6 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const MyHomePage(title: 'Text To Speech Example'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, this.title}) : super(key: key);
-
-  final String? title;
-
-  @override
-  MyHomePageState createState() => MyHomePageState();
-}
-
-class MyHomePageState extends State<MyHomePage> {
-  AudioPlayer audioPlayer = AudioPlayer();
-  final ElevenLabsTTS elevenlabs = ElevenLabsTTS(apiKey: dotenv.get("API_KEY"));
-
-  String text =
-      "Once men turned their thinking over to machines in the hope that this would set them free. But that only permitted other men with machines to enslave them.";
-
-  _playDemo() async {
-    File file = await elevenlabs.create(
-      text: text,
-      voiceId: "ErXwobaYiN019PkySvjV",
-      fileName: "Hello World",
-      stability: 0.2,
-      similarityBoost: 0.2,
-    );
-    await audioPlayer.play(DeviceFileSource(file.path), volume: 1.0);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              text,
-              style: const TextStyle(
-                fontSize: 15,
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _playDemo,
-        tooltip: 'Play Demo',
-        child: const Icon(Icons.arrow_right_alt_outlined),
-      ),
     );
   }
 }

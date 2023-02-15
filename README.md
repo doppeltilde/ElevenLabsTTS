@@ -2,25 +2,32 @@
 
 [![pub package](https://img.shields.io/pub/v/elevenlabs.svg)](https://pub.dartlang.org/packages/elevenlabs)
 
-A simple wrapper for ElevenLabs's [Text-To-Speech API](https://beta.elevenlabs.io).
+Lightweight wrapper for ElevenLabs's [Text-To-Speech API](https://beta.elevenlabs.io).
 
 ## Usage
 
 1. Add the package as a dependency to your `pubspec.yaml` file.
-2. A audio package is required. I recommend [AudioPlayers](https://pub.dev/packages/audioplayers) or [just_audio](https://pub.dev/packages/just_audio).
+2. An audio package is required. I recommend [AudioPlayers](https://pub.dev/packages/audioplayers) or [just_audio](https://pub.dev/packages/just_audio).
 
-3. Initialize ElevenLabsTTS:
+3. Initialize ElevenLabs:
 
 ```dart
-ElevenLabsTTS elevenlabs = ElevenLabsTTS(apiKey: 'API_KEY');
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize ElevenLabs
+  ElevenLabs(apiKey: dotenv.get("API_KEY"));
+
+  runApp(const MyApp());
+}
 ```
 
+
+- Convert your text to a File object:
 VoiceId's can be found here: https://api.elevenlabs.io/v1/voices
 
-4. Convert your text to a File object (**api key required**):
-
 ```dart
-    elevenlabs.create(
+    File file = await ElevenLabs.instance.create(
       // Your Input
       text: text,
 
@@ -41,5 +48,14 @@ VoiceId's can be found here: https://api.elevenlabs.io/v1/voices
       // essential to find the optimal setting.
       similarityBoost: 1.0,
     );
+```
+
+- List voices:
+```dart
+    final voices = await ElevenLabs.instance.fetchVoices();
+    for (var i in voices) {
+      print(
+          'Voice Name: ${i.name}, Voice ID: ${i.voiceId}, Category: ${i.category}');
+    }
 ```
 See [example](https://github.com/jonafeucht/ElevenLabsTTS/blob/main/example/lib/main.dart) for more details.
