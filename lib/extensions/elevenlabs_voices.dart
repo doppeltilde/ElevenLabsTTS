@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:elevenlabs/Models/elevenlabs_voices_model.dart';
 import 'package:elevenlabs/core/elevenlabs_endpoints.dart';
 import 'package:elevenlabs/elevenlabs.dart';
-import 'package:http/http.dart' as http;
 
 extension ElevenLabsVoices on ElevenLabs {
   Future<List<Voice>> fetchVoices() async {
@@ -13,7 +12,7 @@ extension ElevenLabsVoices on ElevenLabs {
     };
 
     try {
-      final response = await http.get(
+      final response = await ElevenLabsEndpoints.client.get(
         Uri.parse(ElevenLabsEndpoints.voicesUrl),
         headers: headers,
       );

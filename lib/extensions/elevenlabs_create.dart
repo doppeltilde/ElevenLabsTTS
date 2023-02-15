@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:elevenlabs/core/elevenlabs_endpoints.dart';
 import 'package:elevenlabs/elevenlabs.dart';
-import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
 extension ElevenLabsCreate on ElevenLabs {
@@ -48,7 +47,7 @@ extension ElevenLabsCreate on ElevenLabs {
       if (await file.exists()) {
         return file;
       } else {
-        var response = await http.post(
+        var response = await ElevenLabsEndpoints.client.post(
           Uri.parse("${ElevenLabsEndpoints.baseUrl}/$endpoint"),
           headers: headers,
           body: json.encode(jsonData),
