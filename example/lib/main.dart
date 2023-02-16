@@ -43,6 +43,10 @@ class MyHomePageState extends State<MyHomePage> {
     await audioPlayer.play(DeviceFileSource(file.path), volume: 1.0);
   }
 
+  _playDagothUr() async {
+    await audioPlayer.play(AssetSource("DagothUr.mp3"), volume: 2.0);
+  }
+
   listVoices() async {
     final voices = await ElevenLabs.instance.fetchVoices();
     for (var i in voices) {
@@ -62,6 +66,9 @@ class MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             ElevatedButton(
                 onPressed: () => _playDemo(), child: const Text("Play Demo")),
+            ElevatedButton(
+                onPressed: () => _playDagothUr(),
+                child: const Text("Dagoth Ur")),
             ElevatedButton(
                 onPressed: () => listVoices(),
                 child: const Text("Fetch Voices")),
