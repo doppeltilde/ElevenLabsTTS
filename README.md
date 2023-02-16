@@ -5,7 +5,7 @@
 Lightweight wrapper for ElevenLabs's [Text-To-Speech API](https://beta.elevenlabs.io).
 
 - Video with ElevenLabs generated voices:
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Wd5yRlYM798" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<a href="https://www.youtube.com/watch?v=Wd5yRlYM798"><img src="https://i3.ytimg.com/vi/Wd5yRlYM798/maxresdefault.jpg"/></a>
 
 ## Usage
 
