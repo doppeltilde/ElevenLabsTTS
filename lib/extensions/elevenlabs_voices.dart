@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:elevenlabs/Models/elevenlabs_voices_model.dart';
+import 'package:elevenlabs/models/elevenlabs_voices_model.dart';
 import 'package:elevenlabs/core/elevenlabs_endpoints.dart';
 import 'package:elevenlabs/elevenlabs.dart';
 

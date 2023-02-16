@@ -28,21 +28,25 @@ VoiceId's can be found here: https://api.elevenlabs.io/v1/voices
 
 ```dart
     File file = await ElevenLabs.instance.create(
+      // Required
       // Your Input
       text: text,
 
+      // Optional
       // The Voice Id for the Voice.
       // See: https://api.elevenlabs.io/v1/voices
       voiceId: "ErXwobaYiN019PkySvjV",
 
-      // Checks if the file exists by name
-      // If it exists it gets called from cache, instead from the API.
+      // Optional
+      // Creates a cached audio file which can then be called by name.
       fileName: "Hello World",
 
+      // Optional
       // Higher stability ensures consistency but may result in monotony, therefore
       // for longer text, it is recommended to decrease stability.
       stability: 1.0,
 
+      // Optional
       // Boosting voice clarity and target speaker similarity is achieved by high
       // enhancement; however, very high values can produce artifacts, so it's
       // essential to find the optimal setting.
@@ -58,4 +62,32 @@ VoiceId's can be found here: https://api.elevenlabs.io/v1/voices
           'Voice Name: ${i.name}, Voice ID: ${i.voiceId}, Category: ${i.category}');
     }
 ```
+
+- List history:
+```dart
+    final voices = await ElevenLabs.instance.listHistory();
+    for (var i in voices) {
+      print(
+          'Item Id: ${i.historyItemId}, Voice ID: ${i.voiceId}, Voice Name: ${i.voiceName}, Text: ${i.text},');
+    }
+```
+
+- Create audio file from history item id:
+```dart
+    final file = await ElevenLabs.instance.createHistoryAudioId(
+      // Required
+      // History Item Id
+      itemId: "your-history-item-id",
+
+      // Optional
+      // Creates a cached audio file which can then be called by name
+      fileName: "your-file-name",
+    );
+```
 See [example](https://github.com/jonafeucht/ElevenLabsTTS/blob/main/example/lib/main.dart) for more details.
+
+
+---
+
+*Notice:*
+*This package was initally created to be used in-house, as such the development is first and foremost aligned with the internal requirements.*

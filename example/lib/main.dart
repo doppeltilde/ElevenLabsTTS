@@ -2,8 +2,11 @@ import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:elevenlabs/elevenlabs.dart';
+import 'package:elevenlabs_example/history.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+AudioPlayer audioPlayer = AudioPlayer();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,8 +28,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> {
-  AudioPlayer audioPlayer = AudioPlayer();
-
   String text =
       "Once men turned their thinking over to machines in the hope that this would set them free. But that only permitted other men with machines to enslave them.";
 
@@ -64,6 +65,14 @@ class MyHomePageState extends State<MyHomePage> {
             ElevatedButton(
                 onPressed: () => listVoices(),
                 child: const Text("Fetch Voices")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const History()),
+                  );
+                },
+                child: const Text("History")),
           ],
         ),
       ),
