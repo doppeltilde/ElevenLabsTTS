@@ -1,3 +1,6 @@
+## 1.0.9
+* Added History.
+* Fix for parsing voices.
 ## 1.0.8
 * Refactor and fixes.
 ## 1.0.7
