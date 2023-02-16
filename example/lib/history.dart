@@ -1,6 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:elevenlabs/elevenlabs.dart';
-import 'package:elevenlabs/extensions/elevenlabs_history.dart';
 import 'package:elevenlabs_example/main.dart';
 import 'package:flutter/material.dart';
 
