@@ -1,4 +1,6 @@
 ## 1.0.9
+* Initialization is now a future. `ElevenLabs(apiKey: 'your-api-key');` becomes `await ElevenLabs.init(apiKey: 'your-api-key');`
+## 1.0.9
 * Added History.
 * Fix for parsing voices.
 ## 1.0.8

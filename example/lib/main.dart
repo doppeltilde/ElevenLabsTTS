@@ -13,7 +13,7 @@ Future<void> main() async {
   await dotenv.load();
 
   // Initialize ElevenLabs
-  ElevenLabs(apiKey: dotenv.get("API_KEY"));
+  await ElevenLabs.init(apiKey: dotenv.get("API_KEY"));
 
   runApp(const MyApp());
 }

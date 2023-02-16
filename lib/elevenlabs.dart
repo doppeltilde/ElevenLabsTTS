@@ -8,7 +8,7 @@ class ElevenLabs {
 
   ElevenLabs._();
 
-  factory ElevenLabs({required String apiKey}) {
+  static Future<ElevenLabs> init({required String apiKey}) async {
     ElevenLabs.apiKey = apiKey;
     return instance;
   }

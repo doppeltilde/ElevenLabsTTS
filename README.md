@@ -4,7 +4,7 @@
 
 Lightweight wrapper for ElevenLabs's [Text-To-Speech API](https://beta.elevenlabs.io).
 
-- Video example with ElevenLabs generated voices:
+* Video example with ElevenLabs generated voices:
 <a href="https://www.youtube.com/watch?v=Wd5yRlYM798"><img src="https://i3.ytimg.com/vi/Wd5yRlYM798/maxresdefault.jpg"/></a>
 
 ## Usage
@@ -19,15 +19,14 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Initialize ElevenLabs
-  ElevenLabs(apiKey: dotenv.get("API_KEY"));
+  await ElevenLabs.init(apiKey: 'your-api-key');
 
   runApp(const MyApp());
 }
 ```
 
 
-- Convert your text to a File object:
-VoiceId's can be found here: https://api.elevenlabs.io/v1/voices
+- Convert your text to a audio file:
 
 ```dart
     File file = await ElevenLabs.instance.create(
@@ -57,7 +56,7 @@ VoiceId's can be found here: https://api.elevenlabs.io/v1/voices
     );
 ```
 
-- List voices:
+- List voices (premade and cloned):
 ```dart
     final voices = await ElevenLabs.instance.listVoices();
     for (var i in voices) {
