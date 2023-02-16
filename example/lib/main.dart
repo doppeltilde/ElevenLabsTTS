@@ -48,7 +48,7 @@ class MyHomePageState extends State<MyHomePage> {
   }
 
   listVoices() async {
-    final voices = await ElevenLabs.instance.fetchVoices();
+    final voices = await ElevenLabs.instance.listVoices();
     for (var i in voices) {
       print(
           'Voice Name: ${i.name}, Voice ID: ${i.voiceId}, Category: ${i.category}');

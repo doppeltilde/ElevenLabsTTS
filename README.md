@@ -4,7 +4,7 @@
 
 Lightweight wrapper for ElevenLabs's [Text-To-Speech API](https://beta.elevenlabs.io).
 
-- Video with ElevenLabs generated voices:
+- Video example with ElevenLabs generated voices:
 <a href="https://www.youtube.com/watch?v=Wd5yRlYM798"><img src="https://i3.ytimg.com/vi/Wd5yRlYM798/maxresdefault.jpg"/></a>
 
 ## Usage
@@ -59,7 +59,7 @@ VoiceId's can be found here: https://api.elevenlabs.io/v1/voices
 
 - List voices:
 ```dart
-    final voices = await ElevenLabs.instance.fetchVoices();
+    final voices = await ElevenLabs.instance.listVoices();
     for (var i in voices) {
       print(
           'Voice Name: ${i.name}, Voice ID: ${i.voiceId}, Category: ${i.category}');

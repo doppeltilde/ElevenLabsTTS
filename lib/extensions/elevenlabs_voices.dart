@@ -5,7 +5,7 @@ import 'package:elevenlabs/core/elevenlabs_endpoints.dart';
 import 'package:elevenlabs/elevenlabs.dart';
 
 extension ElevenLabsVoices on ElevenLabs {
-  Future<List<Voice>> fetchVoices() async {
+  Future<List<Voice>> listVoices() async {
     Map<String, String> headers = {
       'xi-api-key': ElevenLabs.apiKey,
       'Content-Type': 'application/json',
@@ -16,6 +16,7 @@ extension ElevenLabsVoices on ElevenLabs {
         Uri.parse(ElevenLabsEndpoints.voicesUrl),
         headers: headers,
       );
+
       final json = jsonDecode(response.body);
       final list = json["voices"] as List;
 
